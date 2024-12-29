@@ -15,5 +15,7 @@ func main() {
 
 	delta := diff.Diff(file1Lines, file2Lines)
 
-	fmt.Println(delta)
+	for _, line := range delta {
+		fmt.Println(line)
+	}
 }

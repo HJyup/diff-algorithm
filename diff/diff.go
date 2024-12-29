@@ -38,5 +38,25 @@ func longestCommonSubsequence(text1 []string, text2 []string) []string {
 }
 
 func Diff(file1 []string, file2 []string) []string {
-	return longestCommonSubsequence(file1, file2)
+	lcs := longestCommonSubsequence(file1, file2)
+
+	var diff []string
+	i, j, k := 0, 0, 0
+
+	for i < len(file1) || j < len(file2) {
+		if k < len(lcs) && i < len(file1) && j < len(file2) && file1[i] == file2[j] && file1[i] == lcs[k] {
+			diff = append(diff, file1[i])
+			i++
+			j++
+			k++
+		} else if i < len(file1) && (k >= len(lcs) || file1[i] != lcs[k]) {
+			diff = append(diff, "-"+file1[i])
+			i++
+		} else if j < len(file2) && (k >= len(lcs) || file2[j] != lcs[k]) {
+			diff = append(diff, "+"+file2[j])
+			j++
+		}
+	}
+
+	return diff
 }
